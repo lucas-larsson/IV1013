@@ -6,6 +6,15 @@ import java.nio.ByteBuffer;
 public class StreamCipher {
 
     public static void main(String[] args) {
+        if (args.length > 3 ) {
+            System.out.println("Too many arguments: " + args.length );
+            System.out.println("Usage: StreamCipher <key> <inputFile> <outputFile>");
+            System.exit(-1);
+        }else if(args.length < 3){
+            System.out.println("Too few arguments: " + args.length );
+            System.out.println("Usage: StreamCipher <key> <inputFile> <outputFile>");
+            System.exit(-2);
+        }
 
         Integer key = Integer.valueOf(args[0]);
         File inputFile = new File(args[1]);
