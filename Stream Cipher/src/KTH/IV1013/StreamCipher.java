@@ -1,7 +1,6 @@
 package KTH.IV1013;
 
 import java.io.*;
-import java.nio.ByteBuffer;
 
 public class StreamCipher {
 
@@ -16,31 +15,26 @@ public class StreamCipher {
             System.exit(-2);
         }
 
-        Integer key = Integer.valueOf(args[0]);
+        long Key = Long.parseLong(args[0]);
         File inputFile = new File(args[1]);
         File outputFile = new File(args[2]);
+
+        MyRandom generator = new MyRandom(Key);
+
         try (
-               // BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-                // BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
                 InputStream in = new BufferedInputStream(new FileInputStream(inputFile));
                 OutputStream out = new BufferedOutputStream(new FileOutputStream(outputFile))
-            )
-        {
-            System.out.println(key);
-            String st;
-           // while ((st = in..readLine()) != null) {
-              //  System.out.println(st);
-                 RC4 r = new RC4(ByteBuffer.allocate(4).putInt(key).array());
-                 byte[] y;
-                y = r.encrypt(in.readAllBytes());
-                out.write(y);
-            //}
+            ){
+            int inputByte = in.read();
+            while (inputByte != -1) {
+                int outputByte = inputByte ^ generator.next(8);
+                out.write(outputByte);
+                inputByte = in.read();
+            }
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Some I/O Error" + e.getMessage());
             System.exit(1);
         }
-        // write your code here
-        System.out.println("wazzup22");
     }
-
 }
