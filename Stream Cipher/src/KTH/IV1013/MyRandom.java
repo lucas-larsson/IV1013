@@ -1,5 +1,6 @@
 package KTH.IV1013;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -15,7 +16,8 @@ public class MyRandom extends Random {
     int a, b;
 
     public MyRandom(long seed) {
-        RC4(); setSeed(seed);
+        setSeed(seed);
+        RC4();
     }
 
     private void RC4() {
@@ -55,4 +57,3 @@ public class MyRandom extends Random {
         s[j] = temp;
     }
 }
-
