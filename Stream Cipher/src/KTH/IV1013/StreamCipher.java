@@ -4,8 +4,6 @@ import java.io.*;
 
 public class StreamCipher {
 
-//        private static final int BUFFER_SIZE = 8;
-
     public static void main(String[] args) {
 
 
@@ -24,44 +22,26 @@ public class StreamCipher {
             System.exit(-2);
         }
 
+
         try {
             Key = Long.parseLong(args[0]);
         } catch (NumberFormatException e) {
             System.out.println("[" + args[0] + "] is not a Valid Key");
         }
-
         inputFile = new File(args[1]);
         outputFile = new File(args[2]);
 
         MyRandom generator = new MyRandom(Key);
-
         // I/O
         try (
-                InputStream in = new FileInputStream(inputFile);
-                OutputStream out = new FileOutputStream(outputFile)
+                BufferedInputStream in = new BufferedInputStream(new FileInputStream(inputFile));
+                BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outputFile))
         ) {
-//            byte[] buffer = new byte[BUFFER_SIZE];
-//            int bytesRead = -1;
-//
-//            while ((bytesRead = in.read(buffer)) != -1) {
-//                if (buffer == 48)  bit = 0; else {bit = 1;}
-//                int outputByte = bytesRead ^ generator.next(8);
-////                out.write(buffer, 0, bytesRead);
-//                out.write(outputByte);
-//                System.out.println(Arrays.toString(buffer));
-//                System.out.println(generator.next(8));
-//                System.out.println(outputByte);
-//            }
-
-
-            int inputByte = in.read();
-            while (inputByte != -1) {
-//                System.out.println(inputByte);
-                // if (inputByte == 48)  bit = 0; else {bit = 1;}
-                // System.out.println(bit);
-                int outputByte = inputByte ^ generator.next(8);
+            byte[] bytes = in.readAllBytes();
+            for (byte aByte : bytes) {
+                int outputByte = aByte ^ generator.next(8);
                 out.write(outputByte);
-                inputByte = in.read();
+                System.out.println(outputByte);
             }
         } catch (IOException e) {
             e.printStackTrace();        // tracers the error origin
