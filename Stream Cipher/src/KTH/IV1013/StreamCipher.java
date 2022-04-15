@@ -27,6 +27,7 @@ public class StreamCipher {
             Key = Long.parseLong(args[0]);
         } catch (NumberFormatException e) {
             System.out.println("[" + args[0] + "] is not a Valid Key");
+            System.exit(-5);
         }
         inputFile = new File(args[1]);
         outputFile = new File(args[2]);
