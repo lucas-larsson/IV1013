@@ -1,6 +1,6 @@
 package KTH.IV1013;
 
-import java.util.Arrays;
+import java.math.BigInteger;
 import java.util.Random;
 
 /**
@@ -10,19 +10,19 @@ import java.util.Random;
  **/
 public class MyRandom extends Random {
 
-    long seed;
+    BigInteger seed;
     byte[] byteKey;
     int[] s = new int[256];
     int a, b;
 
-    public MyRandom(long seed) {
+    public MyRandom(BigInteger seed) {
         setSeed(seed);
         RC4();
     }
 
     private void RC4() {
         // inserts the Key to a byte array s
-        byteKey = (seed + "").getBytes();
+        byteKey = (seed).toByteArray();
         for (int i = 0; i < 256; i++) {
             s[i] = i;
         }
@@ -36,7 +36,7 @@ public class MyRandom extends Random {
 
     // next() method that overrides the superclasses
     @Override
-    protected int next(int bits) {
+    public int nextInt(int bits) {
         //Increment and randomize
         a = (a + 1) % 256;
         b = (b + s[a]) % 256;
@@ -45,8 +45,8 @@ public class MyRandom extends Random {
     }
 
     // setSeed() method that overrides the superclasses
-    @Override
-    public synchronized void setSeed(long seed) {
+
+    public synchronized void setSeed(BigInteger seed) {
         this.seed = seed;
     }
 

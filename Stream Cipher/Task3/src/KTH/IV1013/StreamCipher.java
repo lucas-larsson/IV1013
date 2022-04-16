@@ -1,17 +1,18 @@
 package KTH.IV1013;
 
 import java.io.*;
+import java.math.BigInteger;
 
 public class StreamCipher {
 
     public static void main(String[] args) {
 
 
-        long Key = 0;
+        BigInteger Key = null;
         File inputFile;
         File outputFile;
 
-        // error handling
+//         error handling
         if (args.length > 3) {
             System.out.println("Too many arguments: " + args.length);
             System.out.println("Usage: StreamCipher <key> <inputFile> <outputFile>");
@@ -23,14 +24,22 @@ public class StreamCipher {
         }
 
 
+
         try {
-            Key = Long.parseLong(args[0]);
+            Key = new BigInteger(args[0]);
         } catch (NumberFormatException e) {
             System.out.println("[" + args[0] + "] is not a Valid Key");
             System.exit(-5);
         }
         inputFile = new File(args[1]);
         outputFile = new File(args[2]);
+
+
+
+//        if (! inputFile.canRead()) {
+//            System.out.println("file: \""+ inputFile+ "\"  is not readable or doesn't exist");
+//            System.exit(4);
+//        }
 
         MyRandom generator = new MyRandom(Key);
         // I/O
@@ -40,13 +49,13 @@ public class StreamCipher {
         ) {
             byte[] bytes = in.readAllBytes();
             for (byte aByte : bytes) {
-                int outputByte = aByte ^ generator.next(8);
+                int outputByte = aByte ^ generator.nextInt(8);
                 out.write(outputByte);
                 System.out.println(outputByte);
             }
         } catch (IOException e) {
             e.printStackTrace();        // tracers the error origin
-            System.out.println("Error Message :" + e.getMessage());
+            System.out.println("Error Message: " + e.getMessage());
             System.exit(1);
         }
     }
