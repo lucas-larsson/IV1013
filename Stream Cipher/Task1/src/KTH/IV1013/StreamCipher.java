@@ -33,6 +33,10 @@ public class StreamCipher {
         inputFile = new File(args[1]);
         outputFile = new File(args[2]);
 
+//        if (! inputFile.canRead()) {
+//            System.out.println("file: \""+ inputFile+ "\"  is not readable or doesn't exist");
+//            System.exit(4);
+//        }
         Random generator = new Random(Key);
         // I/O
         try (
