@@ -1,0 +1,52 @@
+lulars@kth.se
+    2.1
+    Q1   Describe your observations.What differences do you see between the algorithms?
+    A1   The algorithms generates different hashes for the same input.
+          Two main differences are that the hashes are not even little similar considering they have the same input,
+          and the second is that they are of different lengths of 128, 160 and 256 bits respectively for MD5 SHA-1 and Sha-256.
+
+
+    Q2  Write down the digests generated using the three algorithms.
+
+    A1  ❯ openssl dgst -md5 mail.txt
+        MD5(mail.txt)= 1faa3a1fa8fc683e203b6520329db472
+
+        ❯ openssl dgst -sha1 mail.txt
+        SHA1(mail.txt)= 761e951719059926e2888892d2ab5ef4c0c7a313
+
+        ❯ openssl dgst -sha256 mail.txt
+        SHA2-256(mail.txt)= 95c41de38b802e7d6c8bf60b55cdd35cf4aa7eb29d5580afee0794924df77c8f
+
+    2.2
+    Q1  sdf
+    A1  sd
+
+
+        ❯ openssl dgst -md5 -hmac "abcdefg" mail.txt
+        HMAC-MD5(mail.txt)= 8314755a027e428491ca191056d41f05
+
+        ❯ openssl dgst -sha1 -hmac "abcdefg" mail.txt
+        HMAC-SHA1(mail.txt)= 0ccda80e12ab9d8e556eb4ca28804662ffb0176f
+
+
+        ❯ openssl dgst -sha256 -hmac "abcdefg" mail.txt
+        HMAC-SHA2-256(mail.txt)= 66f3fbcab4c573ebfbeb8868965b7eccb834985d2c702018357c2e7b4294312c
+
+
+        ❯ openssl dgst -md5 -hmac "IV1013-key" mail.txt
+        HMAC-MD5(mail.txt)= c2584bd6d7a40f692b2eca3834a4a829
+
+
+        ❯ openssl dgst -sha1 -hmac "IV1013-key" mail.txt
+        HMAC-SHA1(mail.txt)= e51dbf4cbf96ce3342f1c597b9393b639c2ed777
+
+
+        ❯ openssl dgst -sha256 -hmac "IV1013-key" mail.txt
+        HMAC-SHA2-256(mail.txt)= 9a81f64b9e299b43f135820c97eb0fe331faae31d170b5e3d923f2f08c01e518
+
+        Java program
+
+        Digest for the message "lulars@kth.se", using SHA-256 is:
+            49022d321df0bb6c26d155e6454720ac65629ac06e77675f7666b1cc299a5900
+        Digest for the message "lulars@kth.se", using SHA-256 is:
+            49022d321df0bb6c26d155e6454720ac65629ac06e77675f7666b1cc299a5900
