@@ -30,7 +30,7 @@ lulars@kth.se
 
     Q4  Now use the string "IV1013-key" as the secret key and write down the keyed hashes generated
         using the three algorithms.
-
+    A4
         ❯ openssl dgst -md5 -hmac "IV1013-key" mail.txt
             HMAC-MD5(mail.txt)= c2584bd6d7a40f692b2eca3834a4a829
 
@@ -40,7 +40,24 @@ lulars@kth.se
         ❯ openssl dgst -sha256 -hmac "IV1013-key" mail.txt
             HMAC-SHA2-256(mail.txt)= 9a81f64b9e299b43f135820c97eb0fe331faae31d170b5e3d923f2f08c01e518
 
+    Q5  To understand the properties of one-way hash functions, we would like to do the following exercise for
+        MD5 and SHA256:
+    A5
+        for "lulars@kth.se"
 
+        ❯ openssl dgst -md5 mail.txt
+        MD5(mail2.txt)= 1faa3a1fa8fc683e203b6520329db472
+
+        ❯ openssl dgst -sha256 mail.txt
+        SHA2-256(mail2.txt)= 95c41de38b802e7d6c8bf60b55cdd35cf4aa7eb29d5580afee0794924df77c8f
+
+        for modified "lulars@kth.se" just flipping the first bit from 0 -> 1
+
+        ❯ openssl dgst -sha256 mail.txt
+        SHA2-256(mail.txt)= c5c6ebe60fe187ee9749e00dbbb184ea8afe65a78f5e399ecee6c5b57853aaea
+
+        ❯ openssl dgst -md5 mail.txt
+        MD5(mail.txt)= ec593de870d1d2688eeb3e78408a2c17
 
 
         ❯ openssl dgst -md5 -hmac "abcdefg" mail.txt
