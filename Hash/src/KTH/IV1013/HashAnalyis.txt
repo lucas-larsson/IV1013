@@ -40,6 +40,7 @@ lulars@kth.se
         ❯ openssl dgst -sha256 -hmac "IV1013-key" mail.txt
             HMAC-SHA2-256(mail.txt)= 9a81f64b9e299b43f135820c97eb0fe331faae31d170b5e3d923f2f08c01e518
 
+    2.3
     Q5  To understand the properties of one-way hash functions, we would like to do the following exercise for
         MD5 and SHA256:
     A5
@@ -58,6 +59,24 @@ lulars@kth.se
 
         ❯ openssl dgst -md5 mail.txt
         MD5(mail.txt)= ec593de870d1d2688eeb3e78408a2c17
+
+        A5... Not similar at all, I wrote a Java program to check the similar bits which can be found on my
+        git repository:  https://github.com/lucas-larsson/IV1013/blob/Master/Hash/src/KTH/IV1013/BitCounter.java
+
+        A print-out of the program: "[117] different bits of total [256]"
+
+        2.4
+        Q6 Investigate how many trials it will take to break the weak collision property using the brute- force method.
+        Below is a list of five messages. For each message, report how many trials it took before you could
+        find a message with the same hash.
+        • IV1013 security
+        • Security is fun
+        • Yes, indeed
+        • Secure IV1013
+        • No way
+
+        A6
+
 
 
         ❯ openssl dgst -md5 -hmac "abcdefg" mail.txt
