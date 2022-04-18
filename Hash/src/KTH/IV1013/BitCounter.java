@@ -23,7 +23,7 @@ public class BitCounter {
             if (A.charAt(i) != (B.charAt(i))) counter++;
             i++;
         }
-        System.out.println("["+counter+"] diffrent bits of total ["+ A.length()+"]");
+        System.out.println("["+counter+"] different bits of total ["+ A.length()+"]");
     }
 
     // okey method
