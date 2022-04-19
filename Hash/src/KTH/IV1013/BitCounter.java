@@ -55,4 +55,5 @@ public class BitCounter {
         hex = hex.replaceAll("F", "1111");
         return hex;
     }
+    // String.format("%8s", Integer.toBinaryString(byte)).replace(' ', '0');
 }
