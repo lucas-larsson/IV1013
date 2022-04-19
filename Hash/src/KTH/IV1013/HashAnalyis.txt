@@ -3,7 +3,7 @@ lulars@kth.se
     Q1   Describe your observations.What differences do you see between the algorithms?
     A1   The algorithms generates different hashes for the same input.
           Two main differences are that the hashes are not even little similar considering they have the same input,
-          and the second is that they are of different lengths of 128, 160 and 256 bits respectively for MD5 SHA-1 and Sha-256.
+          and the second is that they are of different lengths of 128, 160 and 256 bits respectively for MD5 SHA-1 and SHA-256.
 
 
     Q2  Write down the digests generated using the three algorithms.
@@ -98,3 +98,43 @@ lulars@kth.se
             49022d321df0bb6c26d155e6454720ac65629ac06e77675f7666b1cc299a5900
         Digest for the message "lulars@kth.se", using SHA-256 is:
             49022d321df0bb6c26d155e6454720ac65629ac06e77675f7666b1cc299a5900
+
+
+        A print-out from the brute force hash cracker:
+
+        Digest for the message "IV1013 security", using SHA-256 is:
+        9c24cd7aa776ea2182fb53657ad98f955d0d68a6ae4f65fafee25b800d9f6085
+        Cracking the Password.............
+
+        It took 26370363 trials to generate an identical digest
+
+        The brute-forced digest is:    0x9c24cdDigest for the message "Security is fun
+        ", using SHA-256 is:
+        41e772983176d9f6cfe73eb75d6d7cbee865fe99d6b0ef2c353a196469c28661
+        Cracking the Password...............
+
+        It took 57351479 trials to generate an identical digest
+
+        The brute-forced digest is:    0x41e772Digest for the message "Yes, indeed
+        ", using SHA-256 is:
+        25d378775a5542250a748c8b61cd83c8e882d2cfee851e14b484f0a17c4406d2
+        Cracking the Password..............
+
+        It took 85015565 trials to generate an identical digest
+
+        The brute-forced digest is:    0x25d378Digest for the message "Secure IV1013
+        ", using SHA-256 is:
+        0364e53861d71e82239fcbbd977ca0e04172bc455037e35b0177fe1a183620e0
+        Cracking the Password...
+
+        It took 90829652 trials to generate an identical digest
+
+        The brute-forced digest is:    0x0364e5Digest for the message "No way
+        ", using SHA-256 is:
+        95bd6e0b8e223268fc03ba2a5cded2f70ae79b5e523d2a3951a9cc9b81e5f582
+        Cracking the Password
+
+        It took 91988581 trials to generate an identical digest
+
+        The brute-forced digest is:    0x95bd6e
+        Process finished with exit code 0
