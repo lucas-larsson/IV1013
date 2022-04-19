@@ -63,7 +63,11 @@ lulars@kth.se
         A5... Not similar at all, I wrote a Java program to check the similar bits which can be found on my
         git repository:  https://github.com/lucas-larsson/IV1013/blob/Master/Hash/src/KTH/IV1013/BitCounter.java
 
-        A print-out of the program: "[117] different bits of total [256]"
+        A print-out of the program:
+         MD5
+        [70] different bits of total [128]
+        SHA-256
+        [117] different bits of total [256]
 
         2.4
         Q6 Investigate how many trials it will take to break the weak collision property using the brute- force method.
