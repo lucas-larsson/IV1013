@@ -10,8 +10,8 @@ import java.math.BigInteger;
 public class BitCounter {
     public static void main(String[] args) {
 
-        String A = toHex(args[0]);
-        String B = toHex(args[1]);
+        String A = hexToBin(args[0]);
+        String B = hexToBin(args[1]);
         System.out.println(A);
         System.out.println(A.length());
         System.out.println(B);
@@ -36,7 +36,7 @@ public class BitCounter {
      */
 
     // Great method, not as little as the privious but it takes into account, extra 0 and such
-    private String hexToBin(String hex){
+    private static String hexToBin(String hex){
         hex = hex.replaceAll("0", "0000");
         hex = hex.replaceAll("1", "0001");
         hex = hex.replaceAll("2", "0010");
@@ -47,12 +47,12 @@ public class BitCounter {
         hex = hex.replaceAll("7", "0111");
         hex = hex.replaceAll("8", "1000");
         hex = hex.replaceAll("9", "1001");
-        hex = hex.replaceAll("A", "1010");
-        hex = hex.replaceAll("B", "1011");
-        hex = hex.replaceAll("C", "1100");
-        hex = hex.replaceAll("D", "1101");
-        hex = hex.replaceAll("E", "1110");
-        hex = hex.replaceAll("F", "1111");
+        hex = hex.replaceAll("a", "1010");
+        hex = hex.replaceAll("b", "1011");
+        hex = hex.replaceAll("c", "1100");
+        hex = hex.replaceAll("d", "1101");
+        hex = hex.replaceAll("e", "1110");
+        hex = hex.replaceAll("f", "1111");
         return hex;
     }
     // String.format("%8s", Integer.toBinaryString(byte)).replace(' ', '0');
