@@ -3,6 +3,7 @@ package KTH.IV1013;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+import java.util.stream.IntStream;
 
 public class SampleDigest {
     static String digestAlgorithm = "SHA-256";
@@ -13,40 +14,41 @@ public class SampleDigest {
 
     public static void main(String[] args) {
 
-        if (args.length != 1){
-            System.err.println("This program needs [1] argument, you used ["+ args.length+"]");
-            System.err.println("Usage: java SampleDigest <inputFile> ");
-            System.exit(-1);
-        }
+//        if (args.length != 1){
+//            System.err.println("This program needs [1] argument, you used ["+ args.length+"]");
+//            System.err.println("Usage: java SampleDigest <inputFile> ");
+//            System.exit(-1);
+//        }
+//
+//        File inputFile = new File(args[0]);
+        IntStream.range(1, 6).mapToObj(i -> new File("src/KTH/IV1013/test/" + i + ".txt")).forEach(inputFile -> {
+            try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(inputFile))) {
 
-        File inputFile = new File(args[0]);
+                byte[] inputBytes = in.readAllBytes();
+                String plainText = new String(inputBytes, StandardCharsets.UTF_8);
 
-        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(inputFile) )){
+                byte[] hashed = getDigest(inputBytes);
+                printDigest(plainText, digestAlgorithm, hashed);
+                BruteForceDigest.bruteForced(hashed);
 
-            byte[] inputBytes = in.readAllBytes();
-            String plainText = new String (inputBytes, StandardCharsets.UTF_8);
-
-            byte [] hashed = getDigest(inputBytes);
-            printDigest( plainText,digestAlgorithm,  hashed);
-            BruteForceDigest.bruteForced(hashed);
-
-        } catch (FileNotFoundException e) {
-            System.err.println("File: \""+ inputFile +"\" Not Found");
-            System.err.println(e.getMessage());
-            System.exit(-2);
-        }catch (NoSuchAlgorithmException e) {
-            System.out.println("Sorry could not find the Algorithm :( ");
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            System.exit(-3);
-        }catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            System.exit(-4);
-        }
+            } catch (FileNotFoundException e) {
+                System.err.println("File: \"" + inputFile + "\" Not Found");
+                System.err.println(e.getMessage());
+                System.exit(-2);
+            } catch (NoSuchAlgorithmException e) {
+                System.out.println("Sorry could not find the Algorithm :( ");
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+                System.exit(-3);
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+                System.exit(-4);
+            }
+        });
     }
 
-    // copied from the class Sample digest provided from Canvas
+    // copied from the class SampleDigest provided from Canvas
     private static byte[] getDigest(byte [] plainText) {
 
             byte[] digest = new byte[0];
