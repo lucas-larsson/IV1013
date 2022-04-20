@@ -11,16 +11,19 @@ public class SampleDigest {
 //    Note: no error handling is implemented to check for encoding, since it is not a requirement of this assignment
     static byte [] bruteForceBits;
 
-
     public static void main(String[] args) {
+            /*
+            this is commented away due to a change in input for easier run
 
-//        if (args.length != 1){
-//            System.err.println("This program needs [1] argument, you used ["+ args.length+"]");
-//            System.err.println("Usage: java SampleDigest <inputFile> ");
-//            System.exit(-1);
-//        }
-//
-//        File inputFile = new File(args[0]);
+        if (args.length != 1){
+            System.err.println("This program needs [1] argument, you used ["+ args.length+"]");
+            System.err.println("Usage: java SampleDigest <inputFile> ");
+            System.exit(-1);
+        }
+        File inputFile = new File(args[0]);
+            */
+
+
         IntStream.range(1, 6).mapToObj(i -> new File("src/KTH/IV1013/test/" + i + ".txt")).forEach(inputFile -> {
             try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(inputFile))) {
 
@@ -29,7 +32,8 @@ public class SampleDigest {
 
                 byte[] hashed = getDigest(inputBytes);
                 printDigest(plainText, digestAlgorithm, hashed);
-                BruteForceDigest.bruteForced(hashed);
+
+                BruteForceDigest.bruteForced( hashed);
 
             } catch (FileNotFoundException e) {
                 System.err.println("File: \"" + inputFile + "\" Not Found");
@@ -48,7 +52,14 @@ public class SampleDigest {
         });
     }
 
-    // copied from the class SampleDigest provided from Canvas
+    /**
+     *  copied from the class SampleDigest provided from Canvas, I modified the method to use for my program
+     *  some parameters are removed and are imported as static variables EX:"digestAlgorithm"  since the assignment is
+     *  only regarding the SHA-256
+     *
+     * @param plainText A byte array to be hashed using Java.Security class using the algorithm @digestAlgorithm
+     * @return digest A byte array containing the hash of plainText
+     */
     private static byte[] getDigest(byte [] plainText) {
 
             byte[] digest = new byte[0];
@@ -64,6 +75,13 @@ public class SampleDigest {
             return digest;
     }
 
+    /**
+     * A method to print out the info about the hashing, copied from Canvas
+     *
+     * @param inputText The inputted String to be hashed
+     * @param algorithm The algorithm used to generate the hash
+     * @param digest    The hash of inputText
+     */
     public static void printDigest(String inputText, String algorithm, byte[] digest) {
         System.out.println("Digest for the message \"" + inputText +"\", using " +
                 algorithm + " is:");
