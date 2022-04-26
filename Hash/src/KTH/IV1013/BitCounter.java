@@ -35,7 +35,7 @@ public class BitCounter {
      *  append 0001 for an input of 0x1
      */
 
-    // Great method, not as little as the privious but it takes into account, extra 0 and such
+    // Great method, not as little as the previous but it takes into account, extra 0 and such
     private static String hexToBin(String hex){
         hex = hex.replaceAll("0", "0000");
         hex = hex.replaceAll("1", "0001");
@@ -55,5 +55,15 @@ public class BitCounter {
         hex = hex.replaceAll("f", "1111");
         return hex;
     }
-    // String.format("%8s", Integer.toBinaryString(byte)).replace(' ', '0');
+
+    // Worked on this method with @TomAxberg
+    public static String toHex(String a, int bits) {
+        StringBuilder str = new StringBuilder(new BigInteger(a, 16).toString(2));
+        if(str.length() < bits){
+            for (int i = 0; i <= bits-str.length()+1; i++) {
+                str.insert(0, "0");
+            }
+        }
+        return str.toString();
+    }
 }
