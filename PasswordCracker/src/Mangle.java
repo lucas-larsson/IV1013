@@ -8,16 +8,20 @@ import java.util.Collections;
  **/
 public class Mangle {
 
+    public static String[] listOfCommonWords = { "123456", "password","12345678", "qwerty", "123456789","12345","1234"," 111111" , "1234567", "dragon","123123","baseball","abc123","football","monkey","letmein","696969","shadow","master","666666","qwertyuiop","123321","mustang","1234567890","michael","654321","pussy","superman","1qaz2wsx","7777777","fuckyou","121212","000000","qazwsx","123qwe","killer","trustno1","jordan","jennifer","zxcvbnm","asdfgh","hunterv","buster","soccer","harley","batman","andrew","tigger","sunshine","iloveyou","fuckme","2000","charlie","robert","thomas","hockey","ranger","daniel","starwars","klaster","112233","george","asshole","computer","michelle","jessica","pepper","1111","zxcvbn","555555","11111111","131313","freedom","777777","pass","fuck","maggie","159753","aaaaaa","ginger","princess","joshua","cheese","amanda","summer","love","ashley","6969","nicole","chelsea","biteme","matthew","access","yankees","987654321","dallas","austin","thunder","taylor","matrix","minecraft"};
+    public static char[] charArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
-//    public static String prependC(String word, int c) {
-//        char character = lettersArray[c];
-//        return character + word;
-//    }
-//
-//    public static String appendC(String word, int c) {
-//        char character = lettersArray[c];
-//        return word + character;
-//    }
+
+
+    public static String prependC(String word, int c) {
+        char character = charArray[c];
+        return character + word;
+    }
+
+    public static String appendC(String word, int c) {
+        char character = charArray[c];
+        return word + character;
+    }
 
     public static String deleteFirst(String word) {
         return word.substring(1);
@@ -87,8 +91,6 @@ public class Mangle {
 
     public static void commonWords (ArrayList<String> dictionary) {
 
-        String[] listOfCommonWords = { "sdf","sdf", "123456", "password","12345678", "qwerty", "123456789","12345","1234"," 111111" , "1234567", "dragon","123123","baseball","abc123","football","monkey","letmein","696969","shadow","master","666666","qwertyuiop","123321","mustang","1234567890","michael","654321","pussy","superman","1qaz2wsx","7777777","fuckyou","121212","000000","qazwsx","123qwe","killer","trustno1","jordan","jennifer","zxcvbnm","asdfgh","hunterv","buster","soccer","harley","batman","andrew","tigger","sunshine","iloveyou","fuckme","2000","charlie","robert","thomas","hockey","ranger","daniel","starwars","klaster","112233","george","asshole","computer","michelle","jessica","pepper","1111","zxcvbn","555555","11111111","131313","freedom","777777","pass","fuck","maggie","159753","aaaaaa","ginger","princess","joshua","cheese","amanda","summer","love","ashley","6969","nicole","chelsea","biteme","matthew","access","yankees","987654321","dallas","austin","thunder","taylor","matrix","minecraft"};
-
         for (String listOfCommonWord : listOfCommonWords) {
             dictionary.add(listOfCommonWord + '\n');
         }
@@ -101,7 +103,7 @@ public class Mangle {
 
         for (String s : dictionary) {
             mangledDictionary.add(reverse(s));
-//            mangledDictionary.add(lowerCase(s));
+            mangledDictionary.add(lowerCase(s));
             mangledDictionary.add(upperCase(s));
             mangledDictionary.add(capitalize(s));
             mangledDictionary.add(ncapitalize(s));
@@ -114,7 +116,41 @@ public class Mangle {
             mangledDictionary.add(reflect2(s));
         }
 
-        System.out.println("all dics are built ");
+        for (int i = 0; i < charArray.length ; i++) {
+            for (String s : dictionary) {
+                mangledDictionary.add(appendC(s, i));
+                mangledDictionary.add(prependC(s, i));
+            }
+        }
+        System.out.println("first run");
         return mangledDictionary;
+    }
+    public static ArrayList mangle2(ArrayList<String> dic) {
+
+//        ArrayList<String> mangledDictionary =  new ArrayList<>();
+
+        for (String s : dic) {
+//            PasswordCrack.dictionary.add(reverse(s)); // done it
+            PasswordCrack.dictionary.add(lowerCase(s));
+//            PasswordCrack.dictionary.add(upperCase(s));
+//            PasswordCrack.dictionary.add(capitalize(s));
+//            PasswordCrack.dictionary.add(ncapitalize(s));
+//            PasswordCrack.dictionary.add(toggleDown(s));
+//            PasswordCrack.dictionary.add(toggleUp(s));
+//            PasswordCrack.dictionary.add(duplicate(s));
+//            PasswordCrack.dictionary.add(deleteFirst(s));
+//            PasswordCrack.dictionary.add(deleteLast(s));
+//            PasswordCrack.dictionary.add(reflect1(s));
+//            PasswordCrack.dictionary.add(reflect2(s));
+        }
+
+//        for (int i = 0; i < charArray.length ; i++) {
+//            for (String s : dic) {
+//                PasswordCrack.dictionary.add(appendC(s, i));
+//                PasswordCrack.dictionary.add(prependC(s, i));
+//            }
+//        }
+        System.out.println("seconded run");
+        return PasswordCrack.dictionary;
     }
 }
