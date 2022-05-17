@@ -7,8 +7,7 @@ public class PasswordCrack {
     public static ArrayList<String> hashedPasswords = new ArrayList<>();
     public static ArrayList<String> dictionary =  new ArrayList<>();
     public static Boolean[] crackedPasswords;
-    public static ArrayList<String> hardToCrack =  new ArrayList<>();
-    public static String[] salt = new String[21];
+    public static ArrayList<String> salt = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -54,15 +53,13 @@ public class PasswordCrack {
             Arrays.fill(crackedPasswords, false);
 
 //          Extract the salt (first two characters) from the hashed passwords
-            Arrays.setAll(salt, i -> hashedPasswords.get(i).substring(0, 2));
-//
+            for (int i = 0; i < 20; i++) salt.add(i, hashedPasswords.get(i).substring(0, 2));
+
+            System.out.println(salt);
+
 //            I create a new ListArray to avoid trowing concurrent runtime exception.
             Mangle.commonWords(dictionary);
-            dicAttack(dictionary, hashedPasswords);
-
-//            Mangle.mangle2(mangledDictionary);
-//            dicAttack2(dictionary);
-
+            dicAttack(dictionary, hashedPasswords, salt);
 
         } catch (FileNotFoundException e) {
             System.err.println("File Not Found");
@@ -75,28 +72,21 @@ public class PasswordCrack {
         }
     }
 
-    public static void dicAttack(ArrayList <String> mangledDictionary, ArrayList <String> passwords ) {
+    public static void dicAttack(ArrayList <String> mangledDictionary, ArrayList <String> passwords, ArrayList <String> salt) {
         System.out.println( " Number of dictionary words before mangle : [" + dictionary.size() + "]");
         System.out.println(" Number of dictionary words after mangle : [" + mangledDictionary.size()+ "]");
         double dif = ((double)dictionary.size() / mangledDictionary.size());
         System.out.println("The original dictionary is " + String.format("%.5g%n", dif) + " % of the original dictionary, compared in the number of words");
         boolean cracked;
 
-        for (int i = 0; i < passwords.size(); i++) {
+        for (int i = 0; i < salt.size(); i++) {
             for (int j = 0; j < mangledDictionary.size(); j++) {
                 String s = mangledDictionary.get(j);
-                String guessedPassword = jcrypt.crypt(salt[i], s);
+                String guessedPassword = jcrypt.crypt(salt.get(i), s);
                 cracked = checkPassword(guessedPassword, passwords.get(i), i, s);
                 if(cracked) break;
 //              indicates progress
                 if((j % 1000000) == 0 ) System.out.print(".");
-            }
-        }
-
-        int bound = crackedPasswords.length;
-        for (int i = 0; i < bound; i++) {
-            if (!crackedPasswords[i]) {
-                hardToCrack.add(passwords.get(i));
             }
         }
 
@@ -111,7 +101,8 @@ public class PasswordCrack {
 
         if (guessedPassword.equals(hashedPassword)){
             crackedPasswords[index] = true;
-            hardToCrack.remove(index);
+            hashedPasswords.remove(index);
+            salt.remove(index);
             int number = index + 1;
             System.out.println(" \n Password number [" + number +"] is cracked");
             System.out.println(" The Hash is :" + guessedPassword);
@@ -125,15 +116,9 @@ public class PasswordCrack {
 
         System.out.println( " Number of dictionary words after mangle : [" + dictionary.size() + "]");
         try{
-            if (hardToCrack.size() == 0) {return;}
+            if (hashedPasswords.size() == 0) {return;}
             else {
-                System.out.println("before");
-                System.out.println(hardToCrack);
-                System.out.println(Arrays.toString(crackedPasswords));
-                dicAttack( Mangle.mangle(dictionary), hardToCrack );
-                System.out.println("after");
-                System.out.println(hardToCrack);
-                System.out.println(Arrays.toString(crackedPasswords));
+                dicAttack( Mangle.mangle(dictionary), hashedPasswords, salt );
             }
 
 
