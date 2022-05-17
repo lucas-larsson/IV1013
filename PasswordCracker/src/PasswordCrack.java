@@ -1,15 +1,14 @@
 import java.io.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class PasswordCrack {
 
     public static ArrayList<String> hashedPasswords = new ArrayList<>();
     public static ArrayList<String> dictionary =  new ArrayList<>();
-
-//    public static String[] onlyPasswords = new String[20];
-    public static String[] salt = new String[20];
+    public static Boolean[] crackedPasswords;
+    public static ArrayList<String> hardToCrack =  new ArrayList<>();
+    public static String[] salt = new String[21];
 
     public static void main(String[] args) {
 
@@ -48,27 +47,21 @@ public class PasswordCrack {
             }
 
 
+//          initialize the array to the size of the given passwords.
+            crackedPasswords = new Boolean[hashedPasswords.size()];
+
+//          Sets the values of the array to false;
+            Arrays.fill(crackedPasswords, false);
+
 //          Extract the salt (first two characters) from the hashed passwords
             Arrays.setAll(salt, i -> hashedPasswords.get(i).substring(0, 2));
-
-
-            System.out.println(hashedPasswords.get(1));
-            System.out.println(hashedPasswords.get(7));
-            System.out.println(hashedPasswords.get(16));
-            System.out.println(hashedPasswords.get(18));
-
-
-
-
-
-
+//
 //            I create a new ListArray to avoid trowing concurrent runtime exception.
-            ArrayList mangledDictionary = Mangle.mangle(dictionary);
-            Mangle.commonWords(mangledDictionary); // remember to fix this
-//            dicAttack(mangledDictionary);
+            Mangle.commonWords(dictionary);
+            dicAttack(dictionary, hashedPasswords);
 
-            Mangle.mangle2(mangledDictionary);
-            dicAttack2(dictionary);
+//            Mangle.mangle2(mangledDictionary);
+//            dicAttack2(dictionary);
 
 
         } catch (FileNotFoundException e) {
@@ -82,63 +75,74 @@ public class PasswordCrack {
         }
     }
 
-    public static void dicAttack(ArrayList <String> mangledDictionary) {
+    public static void dicAttack(ArrayList <String> mangledDictionary, ArrayList <String> passwords ) {
         System.out.println( " Number of dictionary words before mangle : [" + dictionary.size() + "]");
         System.out.println(" Number of dictionary words after mangle : [" + mangledDictionary.size()+ "]");
         double dif = ((double)dictionary.size() / mangledDictionary.size());
         System.out.println("The original dictionary is " + String.format("%.5g%n", dif) + " % of the original dictionary, compared in the number of words");
         boolean cracked;
 
-        for (int i = 0; i < hashedPasswords.size(); i++) {
+        for (int i = 0; i < passwords.size(); i++) {
             for (int j = 0; j < mangledDictionary.size(); j++) {
                 String s = mangledDictionary.get(j);
                 String guessedPassword = jcrypt.crypt(salt[i], s);
-                cracked = checkPassword(guessedPassword, hashedPasswords.get(i), i, s);
+                cracked = checkPassword(guessedPassword, passwords.get(i), i, s);
                 if(cracked) break;
 //              indicates progress
                 if((j % 1000000) == 0 ) System.out.print(".");
             }
         }
+
+        int bound = crackedPasswords.length;
+        for (int i = 0; i < bound; i++) {
+            if (!crackedPasswords[i]) {
+                hardToCrack.add(passwords.get(i));
+            }
+        }
+
+        System.out.println(Arrays.toString(crackedPasswords));
+
+        if( Arrays.asList(crackedPasswords).contains(false)){
+            dicAttack4Ever();
+        }
     }
 
-    private static boolean checkPassword(String guessedPassword, String hashedPassword, int index, String s) {
+    private static boolean checkPassword(String guessedPassword, String hashedPassword, int index, String password) {
 
-//        if (guessedPassword.equals(hashedPassword)){
         if (guessedPassword.equals(hashedPassword)){
+            crackedPasswords[index] = true;
+            hardToCrack.remove(index);
             int number = index + 1;
             System.out.println(" \n Password number [" + number +"] is cracked");
-            System.out.println(" The password is :" + s);
+            System.out.println(" The Hash is :" + guessedPassword);
+            System.out.println(" The password is :" + password);
             return true;
         }
         return false;
     }
 
-    public static void dicAttack2(ArrayList <String> mangledDictionary) {
-        System.out.println( " Number of dictionary words before mangle : [" + dictionary.size() + "]");
-        System.out.println(" Number of dictionary words after mangle : [" + mangledDictionary.size()+ "]");
+    public static void dicAttack4Ever() {
 
-        boolean cracked;
-
-         ArrayList<String> hashedPassword = new ArrayList<>();
-
-
-
-         hashedPassword.add(hashedPasswords.get(1));
-        hashedPassword.add(hashedPasswords.get(7));
-        hashedPassword.add(hashedPasswords.get(16));
-        hashedPassword.add(hashedPasswords.get(18));
-
-        System.out.println(hashedPassword);
-
-        for (int i = 0; i < hashedPassword.size(); i++) {
-            for (int j = 0; j < mangledDictionary.size(); j++) {
-                String s = mangledDictionary.get(j);
-                String guessedPassword = jcrypt.crypt(salt[i], s);
-                cracked = checkPassword(guessedPassword, hashedPassword.get(i), i, s);
-                if(cracked) break;
-//              indicates progress
-                if((j % 1000000) == 0 ) System.out.print(".");
+        System.out.println( " Number of dictionary words after mangle : [" + dictionary.size() + "]");
+        try{
+            if (hardToCrack.size() == 0) {return;}
+            else {
+                System.out.println("before");
+                System.out.println(hardToCrack);
+                System.out.println(Arrays.toString(crackedPasswords));
+                dicAttack( Mangle.mangle(dictionary), hardToCrack );
+                System.out.println("after");
+                System.out.println(hardToCrack);
+                System.out.println(Arrays.toString(crackedPasswords));
             }
+
+
+        }catch (OutOfMemoryError e){
+            System.err.println("now you are out of memory");
+            System.exit(0);
+        }catch (Exception e){
+            System.err.println("some other exception");
+            System.out.println(e.getMessage());
         }
     }
 }
