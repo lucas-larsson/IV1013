@@ -83,7 +83,7 @@ public class Mangle {
             if (i % 2 != 0) {
                 toggle.append(word.substring(i, i + 1).toUpperCase());
             } else {
-                toggle.append(word.substring(i, i + 1));
+                toggle.append(word.charAt(i));
             }
         }
         return toggle.toString();
@@ -124,33 +124,5 @@ public class Mangle {
         }
         System.out.println("first run");
         return mangledDictionary;
-    }
-    public static ArrayList mangle2(ArrayList<String> dic) {
-
-//        ArrayList<String> mangledDictionary =  new ArrayList<>();
-
-        for (String s : dic) {
-//            PasswordCrack.dictionary.add(reverse(s)); // done it
-            PasswordCrack.dictionary.add(lowerCase(s));
-//            PasswordCrack.dictionary.add(upperCase(s));
-//            PasswordCrack.dictionary.add(capitalize(s));
-//            PasswordCrack.dictionary.add(ncapitalize(s));
-//            PasswordCrack.dictionary.add(toggleDown(s));
-//            PasswordCrack.dictionary.add(toggleUp(s));
-//            PasswordCrack.dictionary.add(duplicate(s));
-//            PasswordCrack.dictionary.add(deleteFirst(s));
-//            PasswordCrack.dictionary.add(deleteLast(s));
-//            PasswordCrack.dictionary.add(reflect1(s));
-//            PasswordCrack.dictionary.add(reflect2(s));
-        }
-
-//        for (int i = 0; i < charArray.length ; i++) {
-//            for (String s : dic) {
-//                PasswordCrack.dictionary.add(appendC(s, i));
-//                PasswordCrack.dictionary.add(prependC(s, i));
-//            }
-//        }
-        System.out.println("seconded run");
-        return PasswordCrack.dictionary;
     }
 }
