@@ -21,7 +21,6 @@ public class Hiddec {
     static Cipher cipher;
 
     public static void input(String[] args) {
-        System.out.println(Arrays.toString(args));
 
         if (args.length != 3 && args.length != 4) {
             System.out.println("please check the next line for usage instructions ");
@@ -33,7 +32,6 @@ public class Hiddec {
 
         for (String argument : args) {
             String[] arguments = argument.split("=");
-            System.out.println(Arrays.toString(arguments));
             switch (arguments[0]) {
                 case "--key" -> KEY = hexStringToByteArray(arguments[1]);
                 case "--input" -> INPUT_PATH = arguments[1];
@@ -106,25 +104,24 @@ public class Hiddec {
         return true;
     }
 
-    static byte[] verify(byte[] hash, byte[] data) throws Exception {
 
+    // this function is inspired by another implementation by student Emil Stahl here "https://github.com/Kocin-sb/Computer-Security-IV1013"
+    static byte[] verify(byte[] hash, byte[] data) throws Exception {
         int hashLength = hash.length, start, end, offset;
         byte[] extractedData, hashedData;
 
         for(offset = hashLength; offset < data.length; offset++){
-
             if(isMatch(data, hash, offset)) {
-
                 extractedData = Arrays.copyOfRange(data, hashLength, offset);
                 start = offset += hashLength;
                 end = start + hashLength;
                 hashedData = Arrays.copyOfRange(data, start, end);
-
                 if(Arrays.equals(md5Hash(extractedData), hashedData))
                     return extractedData;
 
                 else
-                    System.out.println("Extracted data do not match verification data"); System.exit(1);
+                    System.out.println("Extracted data do not match verification data");
+                System.exit(-1);
             }
         }
         throw new Exception("No data found");
